@@ -9,7 +9,7 @@ required_plugins.each do |plugin|
 end
 
 default_vagrantbox = "centos/7"
-default_playbook   = "playbook.yml"
+default_playbook   = "ansible/playbook.yml"
 
 vagrantbox = ENV['VAGRANTBOX'] || default_vagrantbox
 playbook = ENV['PLAYBOOK'] || default_playbook
@@ -22,6 +22,9 @@ Vagrant.configure(2) do |config|
   end
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.hostname = "mesos"
+  config.vm.synced_folder ".",
+	  "/vagrant",
+	  type: "virtualbox"
 
   # https://www.vagrantup.com/docs/provisioning/ansible_local.html
   config.vm.provision "ansible_local" do |ansible|
