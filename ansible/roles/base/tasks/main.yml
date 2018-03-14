@@ -2,3 +2,11 @@
   yum:
     name: '*'
     state: latest
+
+- name: Setup hostfile
+  copy:
+    src: "{{ role_path }}/files/hosts"
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
