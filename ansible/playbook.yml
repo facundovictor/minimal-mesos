@@ -2,4 +2,4 @@
   hosts: default
   become: true
   roles:
-    - update-latest
+    - base
