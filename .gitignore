@@ -4,3 +4,6 @@
 
 # VM local files
 .vagrant/
+
+# Ansible retry
+ansible/playbook.retry
