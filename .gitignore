@@ -1,0 +1,6 @@
+# Vim tmp files
+*.swp
+*.swo
+
+# VM local files
+.vagrant/
