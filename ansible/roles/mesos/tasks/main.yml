@@ -16,6 +16,14 @@
     name: marathon
     state: latest
 
+- name: Configure marathon
+  copy:
+    src: "{{ role_path }}/files/marathon.conf"
+    dest: /etc/default/marathon
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Start mesos-master
   service:
     name: mesos-master
