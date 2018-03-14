@@ -1,3 +1,4 @@
+---
 - name: Apply all available patches
   hosts: all
   become: true
