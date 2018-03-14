@@ -18,7 +18,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = vagrantbox
 
   config.vm.provider "virtualbox" do |vb|
-     vb.memory = "2048"
+     vb.memory = "4096"
   end
 
   # https://open.mesosphere.com/advanced-course/installing-software/
