@@ -20,6 +20,8 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "2048"
   end
+
+  # https://open.mesosphere.com/advanced-course/installing-software/
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.hostname = "mesos"
   config.vm.synced_folder ".",
