@@ -1,0 +1,26 @@
+---
+# Install mesos dependencies
+# https://open.mesosphere.com/advanced-course/installing-zookeeper/
+- name: Install cloudera
+  yum:
+    name: http://archive.cloudera.com/cdh4/one-click-install/redhat/6/x86_64/cloudera-cdh-4-0.x86_64.rpm
+  ignore_errors: true
+
+- name: Install zookeeper
+  yum:
+    name: zookeeper
+    state: latest
+
+- name: Install zookeeper-server
+  yum:
+    name: zookeeper-server
+    state: latest
+
+- shell: zookeeper-server-initialize --myid=1 --force
+  become_user: zookeeper
+
+- name: Start zookeeper-server
+  service:
+    name: zookeeper-server
+    state: started
+    enabled: yes

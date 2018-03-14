@@ -5,8 +5,9 @@
   roles:
     - base
 
-- name: Install Mesos
+- name: Install Mesos, Marathon, Zookeeper
   hosts: all
   become: true
   roles:
     - mesos
+    - zookeeper
