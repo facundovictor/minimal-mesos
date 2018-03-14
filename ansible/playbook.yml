@@ -1,0 +1,5 @@
+- name: Apply all available patches
+  hosts: default
+  become: true
+  roles:
+    - update-latest
