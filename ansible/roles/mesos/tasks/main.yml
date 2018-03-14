@@ -1,0 +1,51 @@
+- name: Install mesosphere
+  yum:
+    name: http://repos.mesosphere.com/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
+  ignore_errors: true
+
+- name: Install mesos
+  yum:
+    name: mesos
+    state: latest
+
+- name: Install marathon
+  yum:
+    name: marathon
+    state: latest
+
+- name: Install zookeeper
+  yum:
+    name: zookeeper
+    state: latest
+
+- name: Install zookeeper-server
+  yum:
+    name: zookeeper-server
+    state: latest
+
+- shell: zookeeper-server-initialize --myid=1 --force
+  become_user: zookeeper
+
+- name: Start zookeeper-server
+  service:
+    name: zookeeper-server
+    state: started
+    enabled: yes
+
+- name: Start mesos-master
+  service:
+    name: mesos-master
+    state: started
+    enabled: yes
+
+- name: Start mesos-slave
+  service:
+    name: mesos-slave
+    state: started
+    enabled: yes
+
+- name: Start marathon
+  service:
+    name: marathon
+    state: started
+    enabled: yes  

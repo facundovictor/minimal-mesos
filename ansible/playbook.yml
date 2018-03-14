@@ -1,5 +1,11 @@
 - name: Apply all available patches
-  hosts: default
+  hosts: all
   become: true
   roles:
     - base
+
+- name: Install Mesos
+  hosts: all
+  become: true
+  roles:
+    - mesos
