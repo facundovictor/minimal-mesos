@@ -12,3 +12,7 @@
     - mesos
     - marathon
     - zookeeper
+    - mesos-dns
+  environment:
+    GOPATH: "/opt/golang"
+    PATH: "{{ ansible_env.PATH }}:/opt/golang/bin"

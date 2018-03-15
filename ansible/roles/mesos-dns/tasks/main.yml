@@ -1,0 +1,29 @@
+---
+# Install mesos dependencies
+# https://open.mesosphere.com/advanced-course/building-and-running-mesos-dns/
+
+- name: Install mesos-dns compilation dependencies
+  yum:
+    name:
+      - golang
+      - git
+      - bind-utils
+
+- name: Create golang HOME path
+  file:
+    path: /opt/golang
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Clone godep
+  shell: go get github.com/tools/godep
+
+- name: Clone mesos-dns
+  shell: go get github.com/mesosphere/mesos-dns
+
+- name: Change directory to mesos-dns repo and build it
+  shell: godep go build .
+  args:
+    chdir: /opt/golang/src/github.com/mesosphere/mesos-dns
