@@ -3,6 +3,7 @@
 # https://open.mesosphere.com/advanced-course/building-and-running-mesos-dns/
 
 - name: Install mesos-dns compilation dependencies
+  tags: [ install, dns ]
   yum:
     name:
       - golang
@@ -10,6 +11,7 @@
       - bind-utils
 
 - name: Create golang HOME path
+  tags: [ install, dns ]
   file:
     path: /opt/golang
     state: directory
@@ -18,12 +20,38 @@
     mode: 0755
 
 - name: Clone godep
+  tags: [ install, dns ]
   shell: go get github.com/tools/godep
 
 - name: Clone mesos-dns
+  tags: [ install, dns ]
   shell: go get github.com/mesosphere/mesos-dns
 
 - name: Change directory to mesos-dns repo and build it
+  tags: [ install, dns ]
   shell: godep go build .
   args:
     chdir: /opt/golang/src/github.com/mesosphere/mesos-dns
+
+- name: Check if nameserver is set
+  tags: [ install, dns ]
+  shell: grep 'nameserver 192.168.33.10' /etc/resolv.conf
+  register: nameserver_grep
+  failed_when: nameserver_grep.rc == 2
+
+- name: Configure nameserver
+  tags: [ install, dns ]
+  lineinfile:
+    path: /etc/resolv.conf
+    insertafter: EOF
+    line: nameserver 192.168.33.10
+  when: nameserver_grep.rc != 0
+
+- name: Configure mesos-dns
+  tags: [ install, dns ]
+  copy:
+    src: "{{ role_path }}/files/config.json"
+    dest: /opt/golang/src/github.com/mesosphere/mesos-dns/config.json
+    owner: root
+    group: root
+    mode: 0644
