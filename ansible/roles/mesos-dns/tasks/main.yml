@@ -42,8 +42,8 @@
 - name: Configure nameserver
   tags: [ install, dns ]
   lineinfile:
-    path: /etc/resolv.conf
-    insertafter: EOF
+    dest: /etc/resolv.conf
+    regexp: '^nameserver(.*)$'
     line: nameserver 192.168.33.10
   when: nameserver_grep.rc != 0
 
