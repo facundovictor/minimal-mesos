@@ -3,22 +3,26 @@
 # https://open.mesosphere.com/advanced-course/installing-software/
 
 - name: Install mesosphere
+  tags: [ install, mesos ]
   yum:
     name: http://repos.mesosphere.com/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
   ignore_errors: true
 
 - name: Install mesos
+  tags: [ install, mesos ]
   yum:
     name: mesos
     state: latest
 
 - name: Start mesos-master
+  tags: [ install, mesos ]
   service:
     name: mesos-master
     state: started
     enabled: yes
 
 - name: Start mesos-slave
+  tags: [ install, mesos ]
   service:
     name: mesos-slave
     state: started

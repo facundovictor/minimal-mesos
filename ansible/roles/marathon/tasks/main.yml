@@ -3,11 +3,13 @@
 # https://open.mesosphere.com/advanced-course/using-apache-mesos/
 # https://open.mesosphere.com/advanced-course/starting-marathon/
 - name: Install marathon
+  tags: [ install, marathon ]
   yum:
     name: marathon
     state: latest
 
 - name: Configure marathon
+  tags: [ install, marathon ]
   copy:
     src: "{{ role_path }}/files/marathon.conf"
     dest: /etc/default/marathon
@@ -16,6 +18,7 @@
     mode: 0644
 
 - name: Start marathon
+  tags: [ install, marathon ]
   service:
     name: marathon
     state: started
