@@ -33,12 +33,6 @@
   args:
     chdir: /opt/golang/src/github.com/mesosphere/mesos-dns
 
-- name: Check if nameserver is set
-  tags: [ install, dns ]
-  shell: grep 'nameserver 192.168.33.10' /etc/resolv.conf
-  register: nameserver_grep
-  failed_when: nameserver_grep.rc == 2
-
 - name: Configure mesos-dns
   tags: [ install, dns ]
   copy:
@@ -65,10 +59,15 @@
     body: "{{ lookup('file','dns-application.json') }}"
     status_code: 201
 
-- name: Configure nameserver
+- name: Clear all nameservers
   tags: [ install, dns ]
   lineinfile:
-    dest: /etc/resolv.conf
+    path: /etc/resolv.conf
+    state: absent
     regexp: '^nameserver(.*)$'
+
+- name: Add mesos-dns to resolv.conf
+  tags: [ install, dns ]
+  lineinfile:
+    path: /etc/resolv.conf
     line: nameserver 192.168.33.10
-  when: nameserver_grep.rc != 0
