@@ -9,6 +9,7 @@ Ansible 2.4.2
 Mesos 1.5.0
 Marathon 1.6
 ZooKeeper 3.4.5
+Chronos 2.5.1
 
 ### Start it
 
@@ -26,4 +27,9 @@ http://192.168.33.10:5050/
 Marathon:
 ```sh
 http://192.168.33.10:8080/
+```
+
+Chronos:
+```sh
+http://192.168.33.10:4400/
 ```
