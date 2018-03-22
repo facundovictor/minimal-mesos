@@ -1,0 +1,16 @@
+---
+# Install chronos
+# https://open.mesosphere.com/advanced-course/installing-chronos/
+
+- name: Install chronos
+  tags: [ install, chronos ]
+  yum:
+    name: chronos
+    state: latest
+
+- name: Start chronos
+  tags: [ install, chronos ]
+  service:
+    name: chronos
+    state: started
+    enabled: yes
