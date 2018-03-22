@@ -5,7 +5,7 @@
   roles:
     - base
 
-- name: Install Mesos, Marathon, Zookeeper
+- name: Install Mesos, Marathon, Zookeeper, Chronos
   hosts: all
   become: true
   roles:
@@ -13,6 +13,7 @@
     - marathon
     - zookeeper
     - mesos-dns
+    - chronos
   environment:
     GOPATH: "/opt/golang"
     PATH: "{{ ansible_env.PATH }}:/opt/golang/bin"
