@@ -39,14 +39,6 @@
   register: nameserver_grep
   failed_when: nameserver_grep.rc == 2
 
-- name: Configure nameserver
-  tags: [ install, dns ]
-  lineinfile:
-    dest: /etc/resolv.conf
-    regexp: '^nameserver(.*)$'
-    line: nameserver 192.168.33.10
-  when: nameserver_grep.rc != 0
-
 - name: Configure mesos-dns
   tags: [ install, dns ]
   copy:
@@ -55,6 +47,12 @@
     owner: root
     group: root
     mode: 0644
+
+# Wait until marathon is ready for accepting requests
+- name: Wait 300 seconds, but only start checking after 60 seconds
+  wait_for_connection:
+    delay: 60
+    timeout: 300
 
 - name: Add dns as marathon application
   tags: [ install, dns ]
@@ -66,3 +64,11 @@
       Content-type: "application/json"
     body: "{{ lookup('file','dns-application.json') }}"
     status_code: 201
+
+- name: Configure nameserver
+  tags: [ install, dns ]
+  lineinfile:
+    dest: /etc/resolv.conf
+    regexp: '^nameserver(.*)$'
+    line: nameserver 192.168.33.10
+  when: nameserver_grep.rc != 0
